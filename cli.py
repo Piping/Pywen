@@ -12,6 +12,7 @@ from prompt_toolkit import PromptSession
 from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.formatted_text import HTML
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.completion import PathCompleter
 
 from config.config import ApprovalMode
 from config.loader import create_default_config, load_config_with_cli_overrides
@@ -129,10 +130,11 @@ async def interactive_mode_streaming(agent: QwenAgent, console: CLIConsole, sess
         lambda: current_task
     )
     
-    # Create prompt session
+    # Create prompt session with path completion
     session = PromptSession(
         history=history,
         auto_suggest=AutoSuggestFromHistory(),
+        completer=PathCompleter(),
         key_bindings=bindings,
         multiline=True,
         wrap_lines=True,
